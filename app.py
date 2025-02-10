@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import tkinter as tk
 from tkinter import ttk
 from ttkthemes import ThemedTk, ThemedStyle
+import requests
 
 load_dotenv()
 
@@ -13,6 +14,8 @@ load_dotenv()
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+AGIDESK_API_KEY = os.getenv("AGIDESK_API_KEY")
+AGIDESK_API_URL = "https://grendene.agidesk.com/v1"
 
 # Variáveis globais
 user_credentials = {"username": "", "password": ""}
@@ -23,6 +26,30 @@ deepseek_client = OpenAI(
     base_url="https://api.deepseek.com/v1",
 )
 
+def buscar_contato_agidesk(query):
+    """Busca contatos na API do Agidesk"""
+    headers = {
+        "Authorization": f"Bearer {AGIDESK_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    
+    try:
+        response = requests.get(
+            f"{AGIDESK_API_URL}/contacts/search",
+            headers=headers,
+            params={"query": query}
+        )
+        response.raise_for_status()
+        
+        data = response.json()
+        if data.get("total", 0) > 0:
+            return data["contacts"][0]
+        return None
+        
+    except Exception as e:
+        print(f"Erro na consulta ao Agidesk: {e}")
+        return None
+
 def generate_technical_summary(texto):
     try:
         response = deepseek_client.chat.completions.create(
@@ -32,8 +59,8 @@ def generate_technical_summary(texto):
                     "role": "system",
                     "content": """Você é um assistente técnico especializado em redação de laudos corporativos. 
                     Gere dois campos baseados no motivo informado:
-                    1. FINALIDADE: Uma frase curta e direta (máx. 15 palavras)
-                    2. SUPORTE TÉCNICO: Resumo técnico objetivo (2-3 frases)"""
+                    1. FINALIDADE: Uma frase curta e direta falando do problema que está ocorrendo (máx. 15 palavras)
+                    2. SUPORTE TÉCNICO: Resumo técnico objetivo, sem muitos detalhes (2-3 frases)"""
                 },
                 {
                     "role": "user", 
@@ -84,12 +111,18 @@ LICENCIAMENTO:
 01 Licença Call Desktop Central UEM Single user Anual (Valor em dólares):........................... $ 7,32"""
 
 def fetch_by_id(user_id):
-    response = supabase.table('users').select('name').eq('user', user_id).execute()
-    return response.data[0]['name'] if response.data else ''
-
+    """Busca nome pelo ID usando Agidesk"""
+    contato = buscar_contato_agidesk(user_id)
+    if contato:
+        return contato.get("name", "")
+    return ""
+ 
 def fetch_by_name(name):
-    response = supabase.table('users').select('user').eq('name', name).execute()
-    return response.data[0]['user'] if response.data else ''
+    """Busca ID pelo nome usando Agidesk"""
+    contato = buscar_contato_agidesk(name)
+    if contato:
+        return str(contato.get("id", ""))
+    return ""
 
 def on_id_change(*args):
     if user_id := user_id_entry.get():
