@@ -1,0 +1,28 @@
+ITENS DA REQUISIÇÃO COM VALORES ESTIMADOS:
+
+01 UN - NOTEBOOK HOMOLOGADO PARA T.I
+
+Link de referência: Homologado pela equipe de TI , Item de estoque.
+
+LICENCIAMENTO:
+01 Licença Call de WTS (Licença padrão para uso - Microsoft):.......................................... R$ 370,00
+01 Licença Call de Windows (Licença padrão para uso - Microsoft):................................... R$ 97,00
+01 Licença Call de Antivírus (Licença padrão para Software Antivírus - Anual):....................... R$ 71,00
+01 Licença Call de Worktime (Software controle de Produtividade):.................................... R$ 14,00
+01 Licença Call Desktop Central UEM Single user Anual (Valor em dólares):........................... $ 7,32
+
+FINALIDADE: Atual máquina do usuário se encontra muito defasada e prejudicial ao trabalho.
+
+SUPORTE TÉCNICO (Resumo): Usuário atualmente possui um tablet o qual não suporta mais suas atividades, o prejudicando em seu trabalho. Seria ideal a troca para um notebook.
+
+NB: 046328
+NS: 5CG5250116
+
+Obs: Alocar bem para o colaborador Raimundo Nonato de Sales Filho (ro1194)
+
+APLICAÇÃO:
+CENTRO DE CUSTO: 20030142
+APROVADOR: André Miorelli (ae5051)
+CHAMADO: ATD-248959 de 13/01/2024
+SOLICITANTE: Raimundo Nonato de Sales Filho (ro1194)
+Avaliação técnica da T.I: Fernando César de Oliveira Brito (fo0192)
