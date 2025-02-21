@@ -40,7 +40,15 @@ while tentativa < max_tentativas and not sucesso:
         if not id_pessoa_agidesk: #Verifica se pegou o ID
             raise ValueError("ID do contato não encontrado")
         print(f"ID Agidesk: {id_pessoa_agidesk}")
-        
+
+        time.sleep(2)
+
+        conteudo_chamado = wait.until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="comment-text-842955"]/text()[5]'))
+        ).text
+
+        if not conteudo_chamado.strip():
+            raise ValueError("Conteúdo do chamado está vazio")
 
         driver.get(f"https://grendene.agidesk.com/br/configuracoes/contato/{id_pessoa_agidesk}")
 
@@ -76,12 +84,13 @@ while tentativa < max_tentativas and not sucesso:
 
         if not centro_de_custo.strip():
             raise ValueError("Centro de custo está vazio")
-            
+
         sucesso = True
         print(f"""
         Username: {id_ad}
         Nome: {nome}
         Centro de Custo: {centro_de_custo}
+        Conteúdo do chamado: {conteudo_chamado}
         """)
 
     except Exception as e:
