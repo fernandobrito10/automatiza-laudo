@@ -43,20 +43,13 @@ while tentativa < max_tentativas and not sucesso:
 
         time.sleep(2)
 
-        conteudo_chamado = wait.until(
-            EC.visibility_of_element_located((By.XPATH, '//*[@id="comment-text-842955"]/text()[5]'))
-        ).text
-
-        if not conteudo_chamado.strip():
-            raise ValueError("Conteúdo do chamado está vazio")
-
         driver.get(f"https://grendene.agidesk.com/br/configuracoes/contato/{id_pessoa_agidesk}")
 
         time.sleep(2)
 
         wait.until(EC.url_contains(f"/br/configuracoes/contato/{id_pessoa_agidesk}"))
 
-        time.sleep(2)
+        time.sleep(3)
 
         id_ad = wait.until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="username"]'))
@@ -90,7 +83,6 @@ while tentativa < max_tentativas and not sucesso:
         Username: {id_ad}
         Nome: {nome}
         Centro de Custo: {centro_de_custo}
-        Conteúdo do chamado: {conteudo_chamado}
         """)
 
     except Exception as e:
