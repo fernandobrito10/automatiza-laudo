@@ -65,3 +65,51 @@ def requisicaoCentrodeCusto(id):
     except requests.exceptions.RequestException as e:
         print(f"Erro na requisição: {str(e)}")
         raise
+
+def encontrarResponsavel(id):
+    url = "https://grendene.agidesk.com/api/v1/contacts?"
+    
+    params = {
+        "app_key": os.getenv("AGIDESK_API_KEY"),
+        "id": id
+    }
+    
+    headers = {
+        "Authorization": f"Bearer {os.getenv('AGIDESK_API_KEY')}"
+    }
+    
+    try:
+        response = requests.get(url, params=params, headers=headers, verify=False)
+        response.raise_for_status()
+        
+        data = response.json()
+        
+        return data[0]['fulltitle'], data[0]['slug']
+    
+    except requests.exceptions.RequestException as e:
+        print(f"Erro na requisição: {str(e)}")
+        raise
+
+def encontrarAprovador(id):
+    url = "https://grendene.agidesk.com/api/v1/contacts?"
+    
+    params = {
+        "app_key": os.getenv("AGIDESK_API_KEY"),
+        "fulltitle": id
+    }
+    
+    headers = {
+        "Authorization": f"Bearer {os.getenv('AGIDESK_API_KEY')}"
+    }
+    
+    try:
+        response = requests.get(url, params=params, headers=headers, verify=False)
+        response.raise_for_status()
+        
+        data = response.json()
+        
+        return data[0]['slug']
+    
+    except requests.exceptions.RequestException as e:
+        print(f"Erro na requisição: {str(e)}")
+        raise
