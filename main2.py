@@ -27,6 +27,7 @@ class AtendimentoApp(MainWindow):
             Solicitante: {dados_solicitante['title']} ({dados_solicitante['slug']})
             Centro de custo: {cc_usuario}
             Aprovador: {aprovador} ({user_aprovador})
+            Chamado: ATD-{atd_id} de 13/01/2024
             Avaliação técnica da T.I: {nome_responsavel} ({user_responsavel})
             """
             
